@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111827">
+  <meta name="description" content="PDFPro — private, browser-based PDF tools. Convert, organize and edit PDF files.">
+  <title>PDFPro — Every PDF task, one workspace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Browser-side libraries -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav wrap" aria-label="Main navigation">
+      <a class="brand" href="#" aria-label="PDFPro home">
+        <span class="brand-mark">P</span>
+        <span>PDF<span class="brand-accent">Pro</span></span>
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="navLinks">
+        <a href="#tools">All tools</a>
+        <a href="#how">How it works</a>
+        <a href="#about">About</a>
+        <a href="#faq">FAQ</a>
+        <a class="nav-cta" href="#tools">Explore tools <span>↗</span></a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-glow glow-one"></div>
+      <div class="hero-glow glow-two"></div>
+      <div class="wrap hero-inner">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="pulse"></span> YOUR FILES STAY ON YOUR DEVICE</div>
+          <h1>Every PDF task.<br><span>One simple workspace.</span></h1>
+          <p>Convert, organize and edit documents with a clean set of tools that runs right in your browser.</p>
+          <div class="hero-search">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="m20 20-4-4"></path>
+            </svg>
+            <input id="toolSearch" type="search" placeholder="Search a tool — e.g. merge PDF" aria-label="Search PDF tools">
+            <kbd>Ctrl K</kbd>
+          </div>
+          <div class="hero-meta">
+            <span><i>✓</i> No account needed</span>
+            <span><i>✓</i> Browser-based processing</span>
+            <span><i>✓</i> Free to use</span>
+          </div>
+        </div>
+
+        <div class="hero-art" aria-hidden="true">
+          <div class="orbit orbit-a"></div>
+          <div class="orbit orbit-b"></div>
+          <div class="doc-card back-card">
+            <div class="doc-fold"></div>
+            <div class="doc-symbol">PDF</div>
+            <div class="doc-lines"><b></b><b></b><b></b><b></b></div>
+          </div>
+          <div class="doc-card front-card">
+            <div class="doc-top"><span>PDF</span><span class="doc-dots">•••</span></div>
+            <div class="doc-big">P</div>
+            <div class="doc-lines"><b></b><b></b><b></b></div>
+            <div class="doc-status">✓ Ready to work</div>
+          </div>
+          <div class="float-chip chip-lock">⌑ <span>Private by design</span></div>
+          <div class="float-chip chip-spark">✦ <span>Fast tools</span></div>
+        </div>
+      </div>
+      <div class="hero-bottom wrap">
+        <span>BUILT FOR EVERYDAY DOCUMENT WORK</span>
+        <div class="hero-line"></div>
+        <span>DESKTOP · TABLET · MOBILE</span>
+      </div>
+    </section>
+
+    <section class="tools-section section-pad" id="tools">
+      <div class="wrap">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow dark-eyebrow">THE PDF TOOLKIT</div>
+            <h2>What do you need to do?</h2>
+            <p>Choose a tool to open its dedicated workspace.</p>
+          </div>
+          <div class="tool-count" id="toolCount">20 tools</div>
+        </div>
+
+        <div class="filters" id="filters" aria-label="Filter tools">
+          <button class="filter-btn active" data-filter="All">All tools</button>
+          <button class="filter-btn" data-filter="Convert">Convert</button>
+          <button class="filter-btn" data-filter="Organize">Organize</button>
+          <button class="filter-btn" data-filter="Edit">Edit</button>
+          <button class="filter-btn" data-filter="Optimize">Optimize</button>
+        </div>
+
+        <div class="tool-grid" id="toolGrid"></div>
+        <div class="empty-state" id="emptyState" hidden>No tools match your search. Try another keyword.</div>
+      </div>
+    </section>
+
+    <section class="how-section section-pad" id="how">
+      <div class="wrap">
+        <div class="section-heading centered">
+          <div class="eyebrow dark-eyebrow">SIMPLE BY DESIGN</div>
+          <h2>Three steps. That's it.</h2>
+          <p>No complicated setup or account required.</p>
+        </div>
+        <div class="steps-grid">
+          <article class="step-card">
+            <div class="step-number">01</div>
+            <div class="step-icon">↥</div>
+            <h3>Choose your file</h3>
+            <p>Select a document from your device or drag it into the workspace.</p>
+          </article>
+          <article class="step-card">
+            <div class="step-number">02</div>
+            <div class="step-icon">✳</div>
+            <h3>Run your tool</h3>
+            <p>Set the options you need and process your document locally.</p>
+          </article>
+          <article class="step-card">
+            <div class="step-number">03</div>
+            <div class="step-icon">↓</div>
+            <h3>Download the result</h3>
+            <p>Save your processed file directly to your device.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="privacy-section" id="about">
+      <div class="wrap privacy-inner">
+        <div class="privacy-icon">⌑</div>
+        <div>
+          <div class="eyebrow">YOUR DOCUMENTS ARE YOURS</div>
+          <h2>Private by design.<br>Simple by default.</h2>
+          <p>PDFPro uses browser-side libraries for supported tasks. Your selected files are processed in your browser and are not sent to a PDFPro server. Some conversion tools depend on external CDN libraries loading in your browser.</p>
+        </div>
+        <div class="privacy-stats">
+          <div><strong>0</strong><span>PDF uploads to our server</span></div>
+          <div><strong>100%</strong><span>Browser-based supported tasks</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="faq-section section-pad" id="faq">
+      <div class="wrap faq-wrap">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow dark-eyebrow">GOOD TO KNOW</div>
+            <h2>Frequently asked questions</h2>
+            <p>Clear answers before you get started.</p>
+          </div>
+        </div>
+        <div class="faq-list">
+          <details>
+            <summary>Are my files uploaded to a server?<span>+</span></summary>
+            <p>No. Supported PDF operations run locally in your browser. The site loads third-party JavaScript libraries from CDNs, but your document contents are not sent to those CDNs by this app.</p>
+          </details>
+          <details>
+            <summary>Can PDFPro remove any watermark?<span>+</span></summary>
+            <p>No. Removing a watermark reliably requires identifying and editing the original PDF objects. A watermark may be flattened into page content, overlap other text, or be protected. PDFPro does not offer automatic watermark removal because it cannot guarantee a clean result.</p>
+          </details>
+          <details>
+            <summary>Why are some PDF features limited?<span>+</span></summary>
+            <p>Some document operations require specialized PDF engines. PDFPro only lists tools that have an implementation in this browser build.</p>
+          </details>
+          <details>
+            <summary>Is there a file size limit?<span>+</span></summary>
+            <p>PDFPro applies a 100 MB per-file safety limit. Large documents may still use substantial memory and may process slowly depending on your device and browser.</p>
+          </details>
+          <details>
+            <summary>Does PDFPro work on phones?<span>+</span></summary>
+            <p>Yes. The layout adapts to phones and tablets. For very large PDFs, a laptop or desktop generally provides more memory and a better processing experience.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-main">
+      <a class="brand footer-brand" href="#">
+        <span class="brand-mark">P</span>
+        <span>PDF<span class="brand-accent">Pro</span></span>
+      </a>
+      <p>Useful PDF tools. No unnecessary complexity.</p>
+      <div class="footer-links">
+        <a href="#tools">Tools</a>
+        <a href="#about">Privacy</a>
+        <a href="#faq">FAQ</a>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <span>© <span id="year"></span> PDFPro</span>
+      <span>Files stay on your device for supported operations.</span>
+    </div>
+  </footer>
+
+  <div class="modal-backdrop" id="workspaceModal" hidden>
+    <section class="workspace" role="dialog" aria-modal="true" aria-labelledby="workspaceTitle">
+      <div class="workspace-head">
+        <div>
+          <div class="workspace-kicker" id="workspaceCategory">PDF TOOL</div>
+          <h2 id="workspaceTitle">Tool workspace</h2>
+          <p id="workspaceDescription"></p>
+        </div>
+        <button class="close-modal" id="closeModal" aria-label="Close workspace">×</button>
+      </div>
+
+      <div class="workspace-body">
+        <div class="upload-zone" id="uploadZone" tabindex="0" role="button" aria-label="Choose files or drop files here">
+          <div class="upload-icon">↑</div>
+          <strong>Drop your files here</strong>
+          <span>or <button type="button" class="text-button" id="browseButton">browse files</button></span>
+          <small id="acceptedTypes">Choose files from your device</small>
+          <input id="fileInput" type="file" hidden>
+        </div>
+        <div class="file-list" id="fileList"></div>
+        <div class="options-panel" id="optionsPanel"></div>
+        <div class="progress-wrap" id="progressWrap" hidden>
+          <div class="progress-label">
+            <span id="progressText">Processing…</span>
+            <span id="progressPercent">0%</span>
+          </div>
+          <div class="progress-track"><div id="progressBar"></div></div>
+        </div>
+        <div class="status-message" id="statusMessage" role="status" aria-live="polite"></div>
+        <div class="workspace-actions">
+          <button class="btn btn-quiet" id="clearFiles">Clear files</button>
+          <button class="btn btn-primary" id="processButton" disabled>Process PDF <span>→</span></button>
+        </div>
+        <a class="download-result" id="downloadResult" hidden download>↓ Download your file</a>
+      </div>
+      <div class="workspace-foot">
+        <span>⌑ Processed locally in your browser</span>
+        <span>Max file size: 100 MB</span>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
